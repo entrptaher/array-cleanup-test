@@ -5,36 +5,41 @@ function cleanUpArray(arr) {
         const newGroup = [];
 
         for (let [innerIndex, elem] of group.entries()) {
-            if ((elem && !prev) || (elem && prev && prev[innerIndex])) {
-                newGroup.push(elem)
-            } else if (elem && prev && !prev[innerIndex]) {
-                if (!group[0]) {
-                    prev[innerIndex] = elem;
-                    newGroup.push(0)
-                } else {
-                    newGroup.push(elem)
-                }
+            if (elem && prev && !prev[innerIndex] && !group[0]) {
+                prev[innerIndex] = elem;
+                newGroup.push(0)
             } else {
                 newGroup.push(elem)
             }
         }
-        newArr.push(newGroup);
+
+        if (!newGroup.every(elem => !elem)) {
+            newArr.push(newGroup);
+        }
     }
 
     // cleanup empty values from array
-    return newArr.filter(group => !(group.every(elem => !elem)))
+    return newArr
 }
-
-// console.log(cleanUpArray([[1, 0, 0, 1], [0, 1, 1, 1]])); // [[1,1,1,1],[0,0,0,1]]
-// console.log(cleanUpArray([[1, 0, 0], [1, 0, 1], [0, 1, 0], [0, 0, 1]])); // [[1,0,0],[1,0,1],[0,1,1]]
 
 const dataSet = [
     { provided: cleanUpArray([[1, 0, 0, 1], [0, 1, 1, 1]]), expected: [[1, 1, 1, 1], [0, 0, 0, 1]] },
     { provided: cleanUpArray([[1, 0, 0, 1], [0, 1, 0, 1]]), expected: [[1, 1, 0, 1], [0, 0, 0, 1]] },
-    { provided: cleanUpArray([[1, 0, 0], [1, 0, 1], [0, 1, 0], [0, 0, 1]]), expected: [[1, 0, 0], [1, 1, 1], [0, 0, 1]] }
+    { provided: cleanUpArray([[1, 0, 0], [1, 0, 1], [0, 1, 0], [0, 0, 1]]), expected: [[1, 0, 0], [1, 1, 1], [0, 0, 1]] },
+    { provided: cleanUpArray([[1, 0, 0], [0, 1, 0], [0, 0, 1]]), expected: [[1, 1, 1]] },
+    { provided: cleanUpArray([[1, 0, 0], [0, 1, 1], [1, 0, 1]]), expected: [[1, 1, 1], [1, 0, 1]] },
+    { provided: cleanUpArray([[1, 0, 0], [0, 0, 1], [0, 1, 1]]), expected: [[1, 1, 1], [0, 0, 1]] },
+    { provided: cleanUpArray([[1, 0, 0], [0, 0, 1], [0, 1, 1], [1, 0, 0]]), expected: [[1, 1, 1], [0, 0, 1], [1, 0, 0]] },
 ];
 
-const assert = require('assert')
-dataSet.forEach(elem => {
-    assert.deepEqual(elem.provided, elem.expected, JSON.stringify({ expected: elem.expected, provided: elem.provided }))
-})
+var assert = require('assert');
+describe('Array', function () {
+    describe('#indexOf()', function () {
+        dataSet.forEach(elem => {
+            it('should match', function () {
+                // assert.equal([1, 2, 3].indexOf(4), -1);
+                assert.deepEqual(elem.provided, elem.expected)
+            })
+        });
+    });
+});

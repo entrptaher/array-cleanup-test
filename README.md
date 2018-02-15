@@ -1,0 +1,1 @@
+# array-cleanup-test

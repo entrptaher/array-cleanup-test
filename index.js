@@ -65,7 +65,7 @@ const dataSet = [
 
 var assert = require("assert");
 describe("Array", function() {
-  describe("#indexOf()", function() {
+  describe("Cleaned Up Data", function() {
     dataSet.forEach(elem => {
       it("should match", function() {
         assert.deepEqual(elem.provided, elem.expected);

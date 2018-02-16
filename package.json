@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.0.1"
-  },
   "scripts": {
-    "test": "mocha index.js"
+    "test": "mocha index.js",
+    "tdd": "nodemon --exec npm run test"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.1",
+    "nodemon": "^1.15.0"
   }
 }
